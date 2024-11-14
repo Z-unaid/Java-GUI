@@ -3,81 +3,64 @@ package AWT;
 import java.awt.*;
 import java.awt.event.*;
 
-public class sample {
-    public static void main(String[] args) {
-        // Create a new Frame
-        Frame frame = new Frame("AWT Components Demo");
+public class sample extends Frame implements ActionListener {
 
-        // Set layout manager to null for custom positioning
-        frame.setLayout(null);
-        frame.setBackground(Color.decode("#112D4E"));
+    // Create components
+    Label usernameLabel, passwordLabel;
+    TextField usernameField, passwordField;
+    Button loginButton;
 
-        // Create and position a Label
-        Label label = new Label("Hello World");
-        label.setBounds(20, 40, 100, 20);
-        frame.add(label);
-        label.setBackground(Color.decode("#DBE2EF"));
+    public sample() {
+        // Create Frame
+        setTitle("Login Page");
+        setSize(300, 200);
+        setLayout(new FlowLayout());
 
-        // Create and position a Button
-        Button button = new Button("Click Me");
-        button.setBounds(200, 80, 80, 30);
-        frame.add(button);
+        // Initialize components
+        usernameLabel = new Label("Username:");
+        usernameField = new TextField(20);
+        passwordLabel = new Label("Password:");
+        passwordField = new TextField(20);
+        passwordField.setEchoChar('*'); // Hide password input
+        loginButton = new Button("Login");
 
-        // Create and position a Checkbox
-        Checkbox checkbox = new Checkbox("I agree");
-        checkbox.setBounds(20, 120, 100, 30);
-        frame.add(checkbox);
+        // Add components to the frame
+        add(usernameLabel);
+        add(usernameField);
+        add(passwordLabel);
+        add(passwordField);
+        add(loginButton);
 
-        // Create and position Radio Buttons using CheckboxGroup
-        CheckboxGroup group = new CheckboxGroup();
-        Checkbox radio1 = new Checkbox("Option 1", group, false);
-        radio1.setBounds(20, 160, 100, 30);
-        Checkbox radio2 = new Checkbox("Option 2", group, false);
-        radio2.setBounds(20, 200, 100, 30);
-        frame.add(radio1);
-        frame.add(radio2);
+        // Add action listener to the button
+        loginButton.addActionListener(this);
 
-        // Create and position a Choice (dropdown menu)
-        Choice choice = new Choice();
-        choice.add("Choice 1");
-        choice.add("Choice 2");
-        choice.add("Choice 3");
-        choice.setBounds(20, 240, 100, 30);
-        frame.add(choice);
-
-        // Create and position a List
-        List list = new List(3);  // Display 3 items at a time
-        list.add("Item 1");
-        list.add("Item 2");
-        list.add("Item 3");
-        list.add("Item 4");
-        list.setBounds(20, 280, 100, 60);
-        frame.add(list);
-
-        // Create and position a TextArea
-        TextArea textArea = new TextArea("Type here...");
-        textArea.setBounds(150, 40, 200, 50);
-        frame.add(textArea);
-
-        // Create and position a TextField
-        TextField textField = new TextField("Enter text");
-        textField.setBounds(150, 160, 200, 30);
-        frame.add(textField);
-
-        // Customize frame settings
-        frame.setSize(400, 400);
-        frame.setVisible(true);
-
-        // Add window listener to close the application
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
+        // Set window to close on close
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
                 System.exit(0);
             }
         });
+
+        // Set the window visibility
+        setVisible(true);
     }
 
-//    public boolean startApp(){
-//        Frame frame
-//    }
+    // Action performed when login button is clicked
+    public void actionPerformed(ActionEvent ae) {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        // Here, you can check username and password with your database or predefined values
+        if (username.equals("admin") && password.equals("1234")) {
+            System.out.println("Login Successful");
+            // You can add further actions here like opening a new window
+        } else {
+            System.out.println("Invalid Username or Password");
+        }
+    }
+
+    // Main method to create the login page
+    public static void main(String[] args) {
+        new sample();
+    }
 }
