@@ -3,64 +3,71 @@ package AWT;
 import java.awt.*;
 import java.awt.event.*;
 
-public class sample extends Frame implements ActionListener {
+public class sample {
+    public static void main(String[] args) {
+        Frame frame = new Frame("Login Page");
 
-    // Create components
-    Label usernameLabel, passwordLabel;
-    TextField usernameField, passwordField;
-    Button loginButton;
+        // Set frame properties
+        frame.setSize(500, 600);
+        frame.setLayout(null);
+        frame.setBackground(new Color(55, 55, 65)); // Dark background
 
-    public sample() {
-        // Create Frame
-        setTitle("Login Page");
-        setSize(300, 200);
-        setLayout(new FlowLayout());
+        // Create "Create an Account" Label
+        Label titleLabel = new Label("Create an account");
+        titleLabel.setBounds(150, 50, 200, 30);
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        frame.add(titleLabel);
 
-        // Initialize components
-        usernameLabel = new Label("Username:");
-        usernameField = new TextField(20);
-        passwordLabel = new Label("Password:");
-        passwordField = new TextField(20);
-        passwordField.setEchoChar('*'); // Hide password input
-        loginButton = new Button("Login");
+        // First Name and Last Name Fields
+        TextField firstNameField = new TextField("First name");
+        firstNameField.setBounds(100, 100, 140, 30);
+        frame.add(firstNameField);
 
-        // Add components to the frame
-        add(usernameLabel);
-        add(usernameField);
-        add(passwordLabel);
-        add(passwordField);
-        add(loginButton);
+        TextField lastNameField = new TextField("Last name");
+        lastNameField.setBounds(260, 100, 140, 30);
+        frame.add(lastNameField);
 
-        // Add action listener to the button
-        loginButton.addActionListener(this);
+        // Email Field
+        TextField emailField = new TextField("Email");
+        emailField.setBounds(100, 150, 300, 30);
+        frame.add(emailField);
 
-        // Set window to close on close
-        addWindowListener(new WindowAdapter() {
+        // Password Field
+        TextField passwordField = new TextField("Enter your password");
+        passwordField.setBounds(100, 200, 300, 30);
+        passwordField.setEchoChar('*'); // Mask password input
+        frame.add(passwordField);
+
+        // Terms & Conditions Checkbox
+        Checkbox termsCheckbox = new Checkbox("I agree to the Terms & Conditions", true);
+        termsCheckbox.setBounds(100, 250, 300, 30);
+        termsCheckbox.setForeground(Color.LIGHT_GRAY);
+        frame.add(termsCheckbox);
+
+        // Create Account Button
+        Button createAccountButton = new Button("Create account");
+        createAccountButton.setBounds(150, 300, 200, 40);
+        createAccountButton.setBackground(new Color(128, 0, 255));
+        createAccountButton.setForeground(Color.WHITE);
+        frame.add(createAccountButton);
+
+        // Add button event listener
+        createAccountButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Basic action for demonstration
+                System.out.println("Account Created!");
+            }
+        });
+
+        // Make frame visible
+        frame.setVisible(true);
+
+        // Add window close functionality
+        frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 System.exit(0);
             }
         });
-
-        // Set the window visibility
-        setVisible(true);
-    }
-
-    // Action performed when login button is clicked
-    public void actionPerformed(ActionEvent ae) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-
-        // Here, you can check username and password with your database or predefined values
-        if (username.equals("admin") && password.equals("1234")) {
-            System.out.println("Login Successful");
-            // You can add further actions here like opening a new window
-        } else {
-            System.out.println("Invalid Username or Password");
-        }
-    }
-
-    // Main method to create the login page
-    public static void main(String[] args) {
-        new sample();
     }
 }
