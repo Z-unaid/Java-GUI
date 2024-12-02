@@ -1,37 +1,27 @@
 package AWT;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class HelloWorld {
     public static void main(String[] args) {
-            Frame frame = new Frame("Basic Frame");
-            Label label = new Label("Hello World");
-            Button btn = new Button("Click me");
-            TextArea textArea = new TextArea("Type to Start.....");
-
-        btn.setLocation(20, 20);
-        btn.setSize(50,50);
-        textArea.setBounds(200, 200, 200,200);
-
-        frame.setLayout(null);
-        frame.add(label);
-        frame.add(btn);
-        frame.add(textArea);
-
+        Frame frame = new Frame("Java App");
         frame.setSize(500, 500);
+        frame.setLayout(new FlowLayout());
 
-        label.setAlignment(Label.CENTER);
+        Button btn1 = new Button("btn 1");
+        Button btn2 = new Button("btn 2");
+        Button btn3 = new Button("btn 3");
+        Button btn4 = new Button("btn 4");
+        Button btn5 = new Button("btn 5");
+
+        btn1.setPreferredSize(new Dimension(100, 70));
+
+        frame.add(btn1);
+        frame.add(btn2);
+        frame.add(btn3);
+        frame.add(btn4);
+        frame.add(btn5);
+
         frame.setVisible(true);
-
-        WindowAdapter wa = new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        };
-
-        frame.addWindowListener(wa);
     }
 }
