@@ -69,6 +69,7 @@ public class Login {
             @Override
             public void windowClosing(WindowEvent e) {
                 db.close();
+                frame.dispose();
                 System.exit(0);
             }
 
@@ -159,27 +160,27 @@ public class Login {
             }
         });
 
-        loginButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("login button clicked");
+        loginButton.addActionListener(_ -> {
+            System.out.println("\nlogin button clicked");
 
-                Status status = db.verify(getLoginUsername(), getLoginPassword());
+            Status status = db.verify(getLoginUsername(), getLoginPassword());
 
-                System.out.println("Status: " + status);
-                System.out.println("Username: " + getLoginUsername());
-                System.out.println("Password: " + getLoginPassword());
+            System.out.println("Status: " + status);
+            System.out.println("Username: " + getLoginUsername());
+            System.out.println("Password: " + getLoginPassword());
 
-                if (status.equals(Status.valid)) {
-                    setUserInfo(db.getInfo(getLoginUsername()));
-                    cardLayout.last(frame);
-                    return;
-                }
-
-                loginWrongUsername.setVisible(status.equals(Status.invalidUsername));
-                loginWrongPassword.setVisible(status.equals(Status.invalidPassword));
+            if (status.equals(Status.valid)) {
+                setUserInfo(db.getInfo(getLoginUsername()));
+                cardLayout.last(frame);
+                makeFormEmpty(false);
+                return;
             }
 
+            loginWrongUsername.setVisible(status.equals(Status.invalidUsername));
+            loginWrongPassword.setVisible(status.equals(Status.invalidPassword));
+        });
+
+        loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 loginButton.setBackground(Color.decode("#e0dede"));
@@ -369,11 +370,12 @@ public class Login {
         });
 
         registerButton.addActionListener(_ -> {
-            System.out.println("process started......");
+            System.out.println("\nprocess started......");
 
             if (isValidFirstname() && isValidEmail() && isValidUsername() && isValidPass()) {
                 if (db.insertData(getName(), getRegisterUsername(), getEmail(), getRegisterPassword())) {
                     registerSuccess.setText("Registered go back to login page");
+                    makeFormEmpty(true);
                 } else {
                     registerSuccess.setText("We apologize an error occurred at server side");
                 }
@@ -536,10 +538,6 @@ public class Login {
             invalidFirstname.setText("*first name is too long");
             invalidFirstname.setVisible(true);
             return false;
-        } else if (getFirstname().length() < 3) {
-            invalidFirstname.setText("*Must contain 3 characters");
-            invalidFirstname.setVisible(true);
-            return false;
         }
 
         invalidFirstname.setText("");
@@ -628,5 +626,21 @@ public class Login {
         }
 
         return isTrue;
+    }
+
+    private void makeFormEmpty(Boolean isTrue) {
+
+        if (isTrue) {
+            //registration form
+            firstnameField.setText(null);
+            lastnameField.setText(null);
+            emailField.setText(null);
+            registerUsernameField.setText(null);
+            registerPasswordField.setText(null);
+        } else {
+            //login form
+            loginUsernameField.setText(null);
+            loginPasswordField.setText(null);
+        }
     }
 }

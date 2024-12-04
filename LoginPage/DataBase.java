@@ -20,9 +20,6 @@ public class DataBase {
             return Status.invalidUsername;
         }
 
-        if (pass.isEmpty()) {
-            return Status.invalidPassword;
-        }
 
         String query = "SELECT userName,pass FROM users WHERE userName = ?;";
 
@@ -32,7 +29,6 @@ public class DataBase {
 
             ResultSet rs = ps.executeQuery();
 
-            ps.close();
 
             if (!rs.next()) {
                 return Status.invalidUsername;
@@ -89,8 +85,6 @@ public class DataBase {
             ps.setString(4, pass);
 
             int rowsAffected = ps.executeUpdate();
-
-            ps.close();
 
             if (rowsAffected < 0) {
                 return false;
